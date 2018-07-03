@@ -1,0 +1,34 @@
+{
+  "name": "login.dfe.public-api.jobs",
+  "version": "1.0.0",
+  "description": "Jobs required for DfE Sign-in public api",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFE-Digital/login.dfe.public-api.jobs.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DFE-Digital/login.dfe.public-api.jobs/issues"
+  },
+  "homepage": "https://github.com/DFE-Digital/login.dfe.public-api.jobs#readme",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": false,
+    "clearMocks": true
+  }
+}
