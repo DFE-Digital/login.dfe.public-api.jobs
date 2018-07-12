@@ -1,4 +1,4 @@
-const { getHandler } = require('./../lib/handlers/invite/publicInvitationNotifyRelyingPartyV1');
+const { getHandler } = require('./../lib/handlers/invite/publicInvitationRequestV1');
 const config = require('./config');
 
 const logger = {
@@ -13,9 +13,14 @@ const logger = {
   },
 };
 const data = {
-  userId: 'user-one',
-  sourceId: 'first-user',
-  callback: 'http://localhost:3000/users/registered',
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test.user@local.test',
+  organisation: 'fa460f7c-8ab9-4cee-aaff-82d6d341d702',
+  sourceId: 'testuser1',
+  callback: 'http://localhost:3000/user/testuser1/registationcomplete',
+  userRedirect: 'http://localhost:3000/login',
+  clientId: 'test'
 };
 
 const handler = getHandler(config, logger);

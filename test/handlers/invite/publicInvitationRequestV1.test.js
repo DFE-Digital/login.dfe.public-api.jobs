@@ -39,7 +39,7 @@ const logger = {
   error: jest.fn(),
 };
 const existingUser = {
-  id: 'user1',
+  sub: 'user1',
 };
 const existingInvitation = {
   id: 'invite1',
@@ -67,7 +67,9 @@ describe('when handling a public invitation request (v1)', () => {
 
     directories.getUserByEmail.mockReset();
     directories.getInvitationByEmail.mockReset();
-    directories.createInvitation.mockReset().mockReturnValue('new-invite');
+    directories.createInvitation.mockReset().mockReturnValue({
+      id: 'new-invite',
+    });
     directories.updateInvitation.mockReset();
     DirectoriesClient.mockReset().mockImplementation(() => {
       return directories;
@@ -93,7 +95,7 @@ describe('when handling a public invitation request (v1)', () => {
     await handler.processor(data);
 
     expect(organisations.addOrganisationToUser).toHaveBeenCalledTimes(1);
-    expect(organisations.addOrganisationToUser).toHaveBeenCalledWith(existingUser.id, data.organisation, 0);
+    expect(organisations.addOrganisationToUser).toHaveBeenCalledWith(existingUser.sub, data.organisation, 0);
   });
 
   it('and a user already exists, then it should not attempt to add org to user if org not specified', async () => {
@@ -111,7 +113,7 @@ describe('when handling a public invitation request (v1)', () => {
     await handler.processor(data);
 
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledTimes(1);
-    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.id, data.sourceId);
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.sub, data.sourceId);
   });
 
   it('and a user already exists, then it should not check for existing invitation or create a new one', async () => {
