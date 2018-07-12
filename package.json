@@ -18,6 +18,7 @@
   "homepage": "https://github.com/DFE-Digital/login.dfe.public-api.jobs#readme",
   "dependencies": {
     "jsonwebtoken": "^8.3.0",
+    "kue": "^0.11.6",
     "lodash": "^4.17.10",
     "login.dfe.jwt-strategies": "git+https://github.com/DFE-Digital/login.dfe.jwt-strategies.git#v2.0.1",
     "request-promise": "^4.2.2",
