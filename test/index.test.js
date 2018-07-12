@@ -9,5 +9,6 @@ describe('when registering jobs', () => {
 
     expect(handlers.find(h => h.type === 'publicinvitationrequest_v1')).toBeDefined();
     expect(handlers.find(h => h.type === 'publicinvitationcomplete_v1')).toBeDefined();
+    expect(handlers.find(h => h.type === 'publicinvitationnotifyrelyingparty_v1')).toBeDefined();
   });
 });

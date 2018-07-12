@@ -67,3 +67,5 @@ typings/
 \.idea/workspace\.xml
 
 \.idea/vcs\.xml
+
+tools/config.js
