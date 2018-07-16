@@ -177,7 +177,7 @@ describe('when handling a public invitation request (v1)', () => {
       email: data.email,
       origin: {
         clientId: data.clientId,
-        redirectUrl: data.userRedirect,
+        redirectUri: data.userRedirect,
       },
       selfStarted: false,
       callbacks: [
