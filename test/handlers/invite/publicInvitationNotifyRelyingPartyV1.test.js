@@ -40,6 +40,14 @@ describe('when handling a notify relying party (v1)', () => {
     handler = getHandler(config, logger);
   });
 
+  it('then it should not attempt to send a callback if its not present in the payload', async () => {
+    data.callback = undefined;
+    await handler.processor(data);
+
+    expect(rp).toHaveBeenCalledTimes(0);
+
+  });
+
   it('then it should post a request to the callback', async () => {
     await handler.processor(data);
 
