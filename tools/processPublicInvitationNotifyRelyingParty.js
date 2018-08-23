@@ -16,6 +16,7 @@ const data = {
   userId: 'user-one',
   sourceId: 'first-user',
   callback: 'http://localhost:3000/users/registered',
+  state: 'EXISTING_USER',
 };
 
 const handler = getHandler(config, logger);
