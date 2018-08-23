@@ -63,6 +63,7 @@ describe('when handling a public invitation request (v1)', () => {
       callback: 'http://source/callback',
       userRedirect: 'http://source/reg/complete',
       clientId: 'clientone',
+      state: "EXISTING_USER"
     };
 
     directories.getUserByEmail.mockReset();
@@ -113,7 +114,7 @@ describe('when handling a public invitation request (v1)', () => {
     await handler.processor(data);
 
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledTimes(1);
-    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.sub, data.sourceId);
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.sub, data.sourceId, data.state);
   });
 
   it('and a user already exists, then it should not check for existing invitation or create a new one', async () => {
