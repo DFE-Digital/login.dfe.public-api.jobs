@@ -46,7 +46,9 @@ describe('when handling a invitation complete (v1)', () => {
         },
         {
           sourceId: 'abc123',
-          callback: 'http://source2/users'
+          callback: 'http://source2/users',
+          state: 'EXISTING_INVITATION',
+          clientId: 'clienttwo'
         }
       ],
       userId: 'user-1',
@@ -64,7 +66,7 @@ describe('when handling a invitation complete (v1)', () => {
     await handler.processor(data);
 
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledTimes(2);
-    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[0].callback, data.userId, data.callbacks[0].sourceId);
-    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[1].callback, data.userId, data.callbacks[1].sourceId);
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[0].callback, data.userId, data.callbacks[0].sourceId, undefined, undefined);
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[1].callback, data.userId, data.callbacks[1].sourceId, 'EXISTING_INVITATION', 'clienttwo');
   });
 });
