@@ -1,5 +1,11 @@
+jest.mock('./../../../lib/infrastructure/applications');
 jest.mock('request-promise');
 jest.mock('jsonwebtoken');
+
+const applications = {
+  getApplication: jest.fn(),
+};
+const ApplicationsClient = require('./../../../lib/infrastructure/applications');
 
 const rp = require('request-promise');
 const jwt = require('jsonwebtoken');
@@ -12,6 +18,7 @@ const config = {
   publicApi: {
     directories: {},
     organisations: {},
+    applications: {},
     auth: {
       jwtSecret: 'some-super-secure-secret',
     },
@@ -37,6 +44,11 @@ describe('when handling a notify relying party (v1)', () => {
 
     jwt.sign.mockReturnValue('json-web-token');
 
+    applications.getApplication.mockReset();
+    ApplicationsClient.mockReset().mockImplementation(() => {
+      return applications;
+    });
+
     handler = getHandler(config, logger);
   });
 
@@ -58,11 +70,36 @@ describe('when handling a notify relying party (v1)', () => {
     });
   });
 
-  it('then it should authorize the call to the callback with a jwt', async () => {
+  it('then it should authorize the call to the callback with a jwt signed using general secret if callback does not have clientid', async () => {
     await handler.processor(data);
 
     expect(jwt.sign).toHaveBeenCalledTimes(1);
     expect(jwt.sign).toHaveBeenCalledWith({}, config.publicApi.auth.jwtSecret, {
+      expiresIn: '10m',
+      issuer: 'signin.education.gov.uk'
+    });
+    expect(rp.mock.calls[0][0]).toMatchObject({
+      headers: {
+        authorization: 'bearer json-web-token',
+      },
+    });
+  });
+
+  it('then it should authorize the call to the callback with a jwt signed using client api secret if callback has clientid', async () => {
+    const apiSecret = 'client_api_secret';
+    applications.getApplication.mockReturnValue({
+      relyingParty: {
+        api_secret: apiSecret,
+      },
+    });
+    data.clientId = 'clientone';
+
+    await handler.processor(data);
+
+    expect(applications.getApplication).toHaveBeenCalledTimes(1);
+    expect(applications.getApplication).toHaveBeenCalledWith(data.clientId);
+    expect(jwt.sign).toHaveBeenCalledTimes(1);
+    expect(jwt.sign).toHaveBeenCalledWith({}, apiSecret, {
       expiresIn: '10m',
       issuer: 'signin.education.gov.uk'
     });
