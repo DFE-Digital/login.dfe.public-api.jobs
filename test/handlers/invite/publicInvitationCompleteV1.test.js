@@ -69,4 +69,12 @@ describe('when handling a invitation complete (v1)', () => {
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[0].callback, data.userId, data.callbacks[0].sourceId, undefined, undefined);
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callbacks[1].callback, data.userId, data.callbacks[1].sourceId, 'EXISTING_INVITATION', 'clienttwo');
   });
+
+  it('then it should not queue any jobs if no callbacks', async () => {
+    data.callbacks = undefined;
+
+    await handler.processor(data);
+
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledTimes(0);
+  });
 });
