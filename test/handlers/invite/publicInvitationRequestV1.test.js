@@ -190,10 +190,18 @@ describe('when handling a public invitation request (v1)', () => {
     });
   });
 
-  it('and the user is new to the system, then it should add organisations to invitation', async () => {
+  it('and the user is new to the system, then it should add organisations to invitation if organisation present', async () => {
     await handler.processor(data);
 
     expect(organisations.addOrganisationToInvitation).toHaveBeenCalledTimes(1);
     expect(organisations.addOrganisationToInvitation).toHaveBeenCalledWith('new-invite', data.organisation, 0);
+  });
+
+  it('and the user is new to the system, then it should not attempt to add organisations to invitation if organisation not present', async () => {
+    data.organisation = undefined;
+
+    await handler.processor(data);
+
+    expect(organisations.addOrganisationToInvitation).toHaveBeenCalledTimes(0);
   });
 });
