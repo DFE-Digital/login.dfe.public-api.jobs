@@ -114,7 +114,7 @@ describe('when handling a public invitation request (v1)', () => {
     await handler.processor(data);
 
     expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledTimes(1);
-    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.sub, data.sourceId, data.state);
+    expect(jobs.queueNotifyRelyingParty).toHaveBeenCalledWith(data.callback, existingUser.sub, data.sourceId, data.state, 'clientone');
   });
 
   it('and a user already exists, then it should not check for existing invitation or create a new one', async () => {
