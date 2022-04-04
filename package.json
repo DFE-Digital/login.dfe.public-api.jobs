@@ -17,22 +17,22 @@
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.public-api.jobs#readme",
   "dependencies": {
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^8.5.1",
     "kue": "^0.11.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "login.dfe.jwt-strategies": "git+https://github.com/DFE-Digital/login.dfe.jwt-strategies.git#v3.0",
-    "request-promise": "^4.2.2",
-    "request": "^2.88.0",
-    "uuid": "^3.3.2"
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "body-parser": "^1.18.3",
-    "eslint": "^6.5.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "express": "^4.16.3",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0"
+    "body-parser": "^1.20.0",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1"
   },
   "jest": {
     "testEnvironment": "node",
