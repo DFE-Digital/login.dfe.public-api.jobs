@@ -19,8 +19,8 @@
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "login.dfe.kue": "git+https://github.com/DFE-Digital/login.dfe.kue.git#v0.11.6",
-    "login.dfe.jwt-strategies": "git+https://github.com/DFE-Digital/login.dfe.jwt-strategies.git#v4.0.0",
+    "login.dfe.kue": "github:DFE-Digital/login.dfe.kue#v0.12.0",
+    "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#v4.1.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "uuid": "^8.3.2"
