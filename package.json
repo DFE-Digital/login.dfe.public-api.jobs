@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.public-api.jobs#readme",
   "dependencies": {
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "login.dfe.async-retry": "github:DFE-Digital/login.dfe.async-retry#v2.0.3",
     "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#v4.1.0",
