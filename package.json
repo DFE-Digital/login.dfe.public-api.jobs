@@ -1,6 +1,6 @@
 {
   "name": "login.dfe.public-api.jobs",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "Jobs required for DfE Sign-in public api",
   "main": "lib/index.js",
   "scripts": {
