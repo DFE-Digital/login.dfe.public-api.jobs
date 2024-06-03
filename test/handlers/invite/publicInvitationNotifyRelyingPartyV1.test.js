@@ -1,5 +1,5 @@
 jest.mock('./../../../lib/infrastructure/applications');
-jest.mock('request-promise');
+jest.mock('login.dfe.async-retry');
 jest.mock('jsonwebtoken');
 
 const applications = {
@@ -7,7 +7,7 @@ const applications = {
 };
 const ApplicationsClient = require('./../../../lib/infrastructure/applications');
 
-const rp = require('request-promise');
+const {fetchApi} = require('login.dfe.async-retry');
 const jwt = require('jsonwebtoken');
 const { getHandler } = require('./../../../lib/handlers/invite/publicInvitationNotifyRelyingPartyV1');
 
@@ -56,18 +56,16 @@ describe('when handling a notify relying party (v1)', () => {
     data.callback = undefined;
     await handler.processor(data);
 
-    expect(rp).toHaveBeenCalledTimes(0);
+    expect(fetchApi).toHaveBeenCalledTimes(0);
 
   });
 
   it('then it should post a request to the callback', async () => {
     await handler.processor(data);
 
-    expect(rp).toHaveBeenCalledTimes(1);
-    expect(rp.mock.calls[0][0]).toMatchObject({
-      method: 'POST',
-      uri: data.callback,
-    });
+    expect(fetchApi).toHaveBeenCalledTimes(1);
+    expect(fetchApi.mock.calls[0][0]).toBe(data.callback);
+    expect(fetchApi.mock.calls[0][1].method).toBe('POST')
   });
 
   it('then it should authorize the call to the callback with a jwt signed using general secret if callback does not have clientid', async () => {
@@ -78,7 +76,7 @@ describe('when handling a notify relying party (v1)', () => {
       expiresIn: '10m',
       issuer: 'signin.education.gov.uk'
     });
-    expect(rp.mock.calls[0][0]).toMatchObject({
+    expect(fetchApi.mock.calls[0][1]).toMatchObject({
       headers: {
         authorization: 'bearer json-web-token',
       },
@@ -103,7 +101,7 @@ describe('when handling a notify relying party (v1)', () => {
       expiresIn: '10m',
       issuer: 'signin.education.gov.uk'
     });
-    expect(rp.mock.calls[0][0]).toMatchObject({
+    expect(fetchApi.mock.calls[0][1]).toMatchObject({
       headers: {
         authorization: 'bearer json-web-token',
       },
@@ -113,12 +111,11 @@ describe('when handling a notify relying party (v1)', () => {
   it('then it should send the users id and source id in body', async () => {
     await handler.processor(data);
 
-    expect(rp.mock.calls[0][0]).toMatchObject({
+    expect(fetchApi.mock.calls[0][1]).toMatchObject({
       body: {
         sub: data.userId,
         sourceId: data.sourceId,
-      },
-      json: true,
+      }
     });
   });
 });
